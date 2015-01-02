@@ -1,0 +1,114 @@
+\hypertarget{namespaceclutils}{}\section{clutils Namespace Reference}
+\label{namespaceclutils}\index{clutils@{clutils}}
+
+
+It brings together functionality common to all Open\+C\+L projects.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classclutils_1_1CLEnv}{C\+L\+Env}
+\begin{DoxyCompactList}\small\item\em Sets up an Open\+C\+L environment. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+const char $\ast$ \hyperlink{namespaceclutils_a8741b6850668dbbdb8a283122365c1d9}{get\+Open\+C\+L\+Error\+Code\+String} (int error\+Code)
+\begin{DoxyCompactList}\small\item\em Returns the name of an error code. \end{DoxyCompactList}\item 
+void \hyperlink{namespaceclutils_aade8becb266bc2e98a7b37f05001011e}{read\+Source} (const std\+::vector$<$ std\+::string $>$ \&kernel\+\_\+filenames, std\+::vector$<$ std\+::string $>$ \&source\+Codes)
+\begin{DoxyCompactList}\small\item\em Reads in the contents from the requested files. \end{DoxyCompactList}\item 
+void \hyperlink{namespaceclutils_a585a32b5c93ecbbf1f233b362f76e988}{split} (const std\+::string \&str, char delim, std\+::vector$<$ std\+::string $>$ \&names)
+\begin{DoxyCompactList}\small\item\em Splits a string on the requested delimiter. \end{DoxyCompactList}\item 
+std\+::pair$<$ const char $\ast$, size\+\_\+t $>$ \hyperlink{namespaceclutils_a485db8206a6181bbba6e1a110c0b9bb2}{make\+\_\+kernel\+\_\+pair} (const std\+::string \&kernel\+\_\+filename)
+\begin{DoxyCompactList}\small\item\em Creates a pair of a char array (source code) and its size. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+It brings together functionality common to all Open\+C\+L projects. 
+
+It offers structures that aim to ease the process of setting up and maintaining an Open\+C\+L environment. 
+
+\subsection{Function Documentation}
+\hypertarget{namespaceclutils_a8741b6850668dbbdb8a283122365c1d9}{}\index{clutils@{clutils}!get\+Open\+C\+L\+Error\+Code\+String@{get\+Open\+C\+L\+Error\+Code\+String}}
+\index{get\+Open\+C\+L\+Error\+Code\+String@{get\+Open\+C\+L\+Error\+Code\+String}!clutils@{clutils}}
+\subsubsection[{get\+Open\+C\+L\+Error\+Code\+String}]{\setlength{\rightskip}{0pt plus 5cm}const char $\ast$ clutils\+::get\+Open\+C\+L\+Error\+Code\+String (
+\begin{DoxyParamCaption}
+\item[{int}]{error\+Code}
+\end{DoxyParamCaption}
+)}\label{namespaceclutils_a8741b6850668dbbdb8a283122365c1d9}
+
+
+Returns the name of an error code. 
+
+Gets an error code and returns its name.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em error\+Code} & an error code. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Its name as a char array. 
+\end{DoxyReturn}
+\hypertarget{namespaceclutils_a485db8206a6181bbba6e1a110c0b9bb2}{}\index{clutils@{clutils}!make\+\_\+kernel\+\_\+pair@{make\+\_\+kernel\+\_\+pair}}
+\index{make\+\_\+kernel\+\_\+pair@{make\+\_\+kernel\+\_\+pair}!clutils@{clutils}}
+\subsubsection[{make\+\_\+kernel\+\_\+pair}]{\setlength{\rightskip}{0pt plus 5cm}std\+::pair$<$ const char $\ast$, size\+\_\+t $>$ clutils\+::make\+\_\+kernel\+\_\+pair (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{source\+Code}
+\end{DoxyParamCaption}
+)}\label{namespaceclutils_a485db8206a6181bbba6e1a110c0b9bb2}
+
+
+Creates a pair of a char array (source code) and its size. 
+
+An operator to be used for producing the pairs required by a cl\+::\+Program\+::\+Sources object.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em source\+Code} & the source code of a kernel (.cl) file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A pair of the source code and its size. 
+\end{DoxyReturn}
+\hypertarget{namespaceclutils_aade8becb266bc2e98a7b37f05001011e}{}\index{clutils@{clutils}!read\+Source@{read\+Source}}
+\index{read\+Source@{read\+Source}!clutils@{clutils}}
+\subsubsection[{read\+Source}]{\setlength{\rightskip}{0pt plus 5cm}void clutils\+::read\+Source (
+\begin{DoxyParamCaption}
+\item[{const std\+::vector$<$ std\+::string $>$ \&}]{kernel\+\_\+filenames, }
+\item[{std\+::vector$<$ std\+::string $>$ \&}]{source\+Codes}
+\end{DoxyParamCaption}
+)}\label{namespaceclutils_aade8becb266bc2e98a7b37f05001011e}
+
+
+Reads in the contents from the requested files. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em kernel\+\_\+filenames} & a vector of strings with the names of the kernel files (.cl). \\
+\hline
+\mbox{\tt out}  & {\em source\+Codes} & a vector of strings with the contents of the files. \\
+\hline
+\end{DoxyParams}
+\hypertarget{namespaceclutils_a585a32b5c93ecbbf1f233b362f76e988}{}\index{clutils@{clutils}!split@{split}}
+\index{split@{split}!clutils@{clutils}}
+\subsubsection[{split}]{\setlength{\rightskip}{0pt plus 5cm}void clutils\+::split (
+\begin{DoxyParamCaption}
+\item[{const std\+::string \&}]{str, }
+\item[{char}]{delim, }
+\item[{std\+::vector$<$ std\+::string $>$ \&}]{names}
+\end{DoxyParamCaption}
+)}\label{namespaceclutils_a585a32b5c93ecbbf1f233b362f76e988}
+
+
+Splits a string on the requested delimiter. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em str} & string containing the tokens. \\
+\hline
+\mbox{\tt in}  & {\em delim} & delimiter on which to split the string. \\
+\hline
+\mbox{\tt out}  & {\em names} & a vector of all the tokens. \\
+\hline
+\end{DoxyParams}

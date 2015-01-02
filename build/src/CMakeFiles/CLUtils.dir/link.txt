@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../lib/libCLUtils.a  CMakeFiles/CLUtils.dir/CLUtils.cpp.o
+/usr/bin/ranlib ../lib/libCLUtils.a
