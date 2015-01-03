@@ -1,5 +1,0 @@
-/home/paign10/github_repos/CLUtils/build/src/CMakeFiles/CLUtils.dir
-/home/paign10/github_repos/CLUtils/build/test/CMakeFiles/check.dir
-/home/paign10/github_repos/CLUtils/build/test/CMakeFiles/clUtils_tests.dir
-/home/paign10/github_repos/CLUtils/build/examples/CMakeFiles/clUtils_vecAdd.dir
-/home/paign10/github_repos/CLUtils/build/docs/CMakeFiles/doxygen.dir

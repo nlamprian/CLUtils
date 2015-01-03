@@ -44,7 +44,7 @@ Build & Install
 ===============
 
 ```bash
-git clone git@github.com:pAIgn10/CLUtils.git
+git clone https://github.com/pAIgn10/CLUtils.git
 cd CLUtils
 
 mkdir build

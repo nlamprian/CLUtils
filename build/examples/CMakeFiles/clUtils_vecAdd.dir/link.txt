@@ -1,1 +1,0 @@
-/usr/bin/c++    -Wall -Wextra    CMakeFiles/clUtils_vecAdd.dir/vecAdd.cpp.o  -o ../bin/clUtils_vecAdd -rdynamic ../lib/libCLUtils.a /opt/AMDAPPSDK-2.9-1/lib/x86_64/libOpenCL.so -Wl,-rpath,/opt/AMDAPPSDK-2.9-1/lib/x86_64 
