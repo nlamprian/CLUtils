@@ -65,9 +65,8 @@ private:
 };
 
 
-/*! \param[in] kernel_filename a vector of strings with all the kernel files 
- *                             (.cl) that are to be compiled for all devices 
- *                             in the first platform.
+/*! \param[in] kernel_filename a string with the kernel file (.cl) that is to 
+ *                             be compiled for all devices in the first platform.
  */
 vecAdd::vecAdd (const std::string &kernel_filename)
                     : clEnv (kernel_filename), 

@@ -19,7 +19,7 @@ API
 The simplest case covered by the library is one where a context is created for the first platform returned by the OpenCL API, and a command queue is created for the first device in that platform. Programs are built for all devices in the associated context. This case is covered automatically when a kernel filename is provided on the definition of a `CLEnv` instance.
 
 
-> #include <CLUtils.hpp>
+> \#include <CLUtils.hpp>
 > 
 > using namespace clutils;
 > 
@@ -44,7 +44,7 @@ The simplest case covered by the library is one where a context is created for t
 Build & Install
 ===============
 
-> git clone git@github.com:pAIgn10/CLUtils.git <br>
+> git clone https://github.com/pAIgn10/CLUtils.git <br>
 > cd CLUtils
 > 
 > mkdir build <br>
