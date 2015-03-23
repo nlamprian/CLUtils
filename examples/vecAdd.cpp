@@ -2,7 +2,7 @@
  *  \brief An example showcasing the use of the CLUtils library.
  *         The executed kernel performs a vector addition.
  *  \author Nick Lamprianidis
- *  \version 0.1
+ *  \version 0.2
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par

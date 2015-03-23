@@ -32,8 +32,8 @@
  *  \param[in] B second operand (buffer) to the vector addition.
  *  \param[out] C holds the result (buffer) of the vector addition.
  */
-__kernel
-void vecAdd (__global int *A, __global int *B, __global int *C)
+kernel
+void vecAdd (global int *A, global int *B, global int *C)
 {
     size_t idx = get_global_id (0);
     C[idx] = A[idx] + B[idx];

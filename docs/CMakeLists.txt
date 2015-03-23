@@ -8,7 +8,7 @@ if ( DOXYGEN_FOUND )
           "${PROJECT_SOURCE_DIR}/include"
           "${PROJECT_SOURCE_DIR}/src"
           "${PROJECT_SOURCE_DIR}/kernels"
-          "${PROJECT_SOURCE_DIR}/test"
+          "${PROJECT_SOURCE_DIR}/tests"
           "${PROJECT_SOURCE_DIR}/examples"
           "${PROJECT_SOURCE_DIR}/docs"
     )

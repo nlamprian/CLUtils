@@ -1,7 +1,7 @@
 /*! \file tests.cpp
  *  \brief Google Test Unit Tests
  *  \author Nick Lamprianidis
- *  \version 0.1
+ *  \version 0.2
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par
@@ -31,6 +31,8 @@
 #include <vector>
 #include <chrono>
 #include <random>
+#include <cmath>
+#include <thread>
 #include <CLUtils.hpp>
 
 
@@ -108,6 +110,88 @@ TEST (CLEnv, AddMoreCLObjects)
 
     for (int elmt : hBufC)
         ASSERT_EQ (2*num, elmt);
+}
+
+
+/*! \brief Tests functionality on 2 vectors of 10 floats and compares them.
+ */
+TEST (ProfilingInfo, BasicFunctionality)
+{ 
+    const int nRepeat = 10;
+    clutils::ProfilingInfo<nRepeat, float> pInfo ("Test");
+
+    // Fill the array ( 1 1 ... 1 1 | 2 2 ... 2 2)
+    for (int i = 0; i < nRepeat; ++i)
+        pInfo[i] = i / (nRepeat / 2) + 1;
+
+    // Check the total
+    ASSERT_EQ (pInfo.total (), (nRepeat / 2) * (float) (1 + 2));
+
+    // Check the mean
+    ASSERT_EQ (pInfo.mean (), 1.5);
+
+    // Check the min
+    ASSERT_EQ (pInfo.min (), 1.0);
+
+    // Check the max
+    ASSERT_EQ (pInfo.max (), 2.0);
+
+    // Create a second to benchmark
+    clutils::ProfilingInfo<nRepeat, float> pInfo2 ("Test2");
+
+    // Fill the array ( 1 1 ... 1 1 | 2 2 ... 2 2)
+    for (int i = 0; i < nRepeat; ++i)
+        pInfo2[i] = i / (nRepeat / 2) + 1;
+
+    // Check the speedup
+    ASSERT_EQ (pInfo2.speedup (pInfo), 1.0);
+    
+    // pInfo.print (pInfo2, "Testing");
+}
+
+
+/*! \brief Tests functionality on a 100,000 us interval.
+ */
+TEST (CPUTimer, BasicFunctionality)
+{ 
+    clutils::CPUTimer<double, std::micro> timer (10);
+
+    // Check that the timer initializes correctly
+    ASSERT_EQ (timer.duration (), 10);
+
+    // Check that the timer resets
+    timer.reset ();
+    ASSERT_EQ (timer.duration (), 0);
+
+    // Check that the timer measures appropriately
+    timer.start ();
+    std::this_thread::sleep_for (std::chrono::duration<int64_t, std::milli> (100));  // 100 ms
+    timer.stop ();
+    ASSERT_LE (timer.duration () - 100000, 1000);  // 1 ms (OS scheduling) tolerance
+}
+
+
+/*! \brief Tests functionality on a ~12 us execution time kernel.
+ */
+TEST (GPUTimer, BasicFunctionality)
+{
+    clutils::CLEnv clEnv;
+    cl::Context &context (clEnv.addContext (0));
+    cl::CommandQueue &queue (clEnv.addQueue (0, 0, CL_QUEUE_PROFILING_ENABLE));
+    cl::Kernel &kernel (clEnv.addProgram (0, kernel_filename, "vecAdd"));
+    cl::NDRange global (256);
+
+    cl::Buffer dBufA (context, CL_MEM_READ_ONLY, n_elements * sizeof (int));
+    cl::Buffer dBufB (context, CL_MEM_WRITE_ONLY, n_elements * sizeof (int));
+    kernel.setArg (0, dBufA);
+    kernel.setArg (1, dBufA);
+    kernel.setArg (2, dBufB);
+
+    clutils::GPUTimer<std::milli> timer (clEnv.devices[0][0]);
+    queue.enqueueNDRangeKernel (kernel, cl::NullRange, global, cl::NullRange, NULL, &timer.event ());
+    queue.flush (); timer.wait ();
+
+    ASSERT_LE (timer.duration (), 0.2);
 }
 
 

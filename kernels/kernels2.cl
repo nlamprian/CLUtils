@@ -32,8 +32,8 @@
  *        This is provided as a command line argument.
  *  \param[in] A a buffer to initialize.
  */
-__kernel
-void initRand (__global int *A)
+kernel
+void initRand (global int *A)
 {
     size_t idx = get_global_id (0);
     A[idx] = INIT_NUM;

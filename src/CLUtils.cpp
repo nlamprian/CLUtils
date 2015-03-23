@@ -3,7 +3,7 @@
  *  \details CLUtils offers utilities that help 
  *           setup and manage an OpenCL environment.
  *  \author Nick Lamprianidis
- *  \version 0.1
+ *  \version 0.2
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par
@@ -33,7 +33,14 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <chrono>
 #include <CLUtils.hpp>
+
+#if defined(_WIN32)
+#include <windows.h>
+#elif defined(__linux__)
+#include <GL/glx.h>
+#endif
 
 
 namespace clutils
@@ -172,6 +179,23 @@ namespace clutils
     }
 
 
+    /*! \param[in] device a device for which to check the "GL Sharing" capability.
+     *  \return Returns true if "GL Sharing" is available, false otherwise.
+     */
+    bool checkCLGLInterop (cl::Device &device)
+    {
+        std::string exts = device.getInfo<CL_DEVICE_EXTENSIONS> ();
+
+        #if defined(__APPLE__) || defined(__MACOSX)
+        std::string glShare("cl_apple_gl_sharing");
+        #else
+        std::string glShare("cl_khr_gl_sharing");
+        #endif
+
+        return exts.find (glShare) != std::string::npos;
+    }
+
+
     /*! \param[in] kernel_filenames a vector of strings with 
      *                              the names of the kernel files (.cl).
      *  \param[out] sourceCodes a vector of strings with the contents of the files.
@@ -281,8 +305,7 @@ namespace clutils
                           << " (" << clutils::getOpenCLErrorCodeString (error.err ()) 
                           << ")"  << std::endl << std::endl;
                 
-                std::string log;
-                programs[0].getBuildInfo (devices[0][0], CL_PROGRAM_BUILD_LOG, &log);
+                std::string log = programs[0].getBuildInfo<CL_PROGRAM_BUILD_LOG> (devices[0][0]);
                 std::cout << log << std::endl;
 
                 exit (EXIT_FAILURE);
@@ -290,8 +313,7 @@ namespace clutils
 
             // Get the kernel names
             // Note: getInfo returns a ';' delimited string.
-            std::string namesString;
-            programs[0].getInfo (CL_PROGRAM_KERNEL_NAMES, &namesString);
+            std::string namesString = programs[0].getInfo<CL_PROGRAM_KERNEL_NAMES> ();
             std::vector<std::string> kernel_names;
             clutils::split (namesString, ';', kernel_names);
             
@@ -315,7 +337,6 @@ namespace clutils
     CLEnv::CLEnv (const std::string &kernel_filename, const char *build_options)
         : CLEnv (std::vector<std::string> { kernel_filename }, build_options)
     {
-
     }
 
 
@@ -338,17 +359,36 @@ namespace clutils
     }
 
 
-    /*! \param[in] ctIdx the index for the context the requested queue is in.
-     *                   Indices follow the order the contexts were created in.
+    /*! \param[in] ctxIdx the index for the context the requested queue is in.
+     *                    Indices follow the order the contexts were created in.
      *  \param[in] qIdx an index for the command queue. 
      *                  Indices follow the order the queues were created in.
      *  \return The requested command queue.
      */
-    cl::CommandQueue& CLEnv::getQueue (unsigned int ctIdx, unsigned int qIdx)
+    cl::CommandQueue& CLEnv::getQueue (unsigned int ctxIdx, unsigned int qIdx)
     {
         try
         {
-            return queues.at (ctIdx).at (qIdx);
+            return queues.at (ctxIdx).at (qIdx);
+        }
+        catch (const std::out_of_range &error)
+        {
+            std::cerr << "Out of Range error: " << error.what () 
+                      << " (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+            exit (EXIT_FAILURE);
+        }
+    }
+
+
+    /*! \param[in] pgIdx the index of the requested program object. 
+     *                   Indices follow the order the programs were created in.
+     *  \return The requested program.
+     */
+    cl::Program& CLEnv::getProgram (unsigned int pgIdx)
+    {
+        try
+        {
+            return programs.at (pgIdx);
         }
         catch (const std::out_of_range &error)
         {
@@ -367,7 +407,7 @@ namespace clutils
     cl::Kernel& CLEnv::getKernel (const char *kernel_name, unsigned int pgIdx)
     {
         try
-        {   
+        {
             /*! \sa kernelIdx */
             unsigned int kIdx = kernelIdx.at (pgIdx).at (std::string (kernel_name));
             return kernels[pgIdx][kIdx];
@@ -381,23 +421,76 @@ namespace clutils
     }
 
 
-    /*! \param[in] pIdx an index for the platform for which to create the context. 
+    /*! \details It allows to create a GL-shared context. If GL-Sharing is not 
+     *           supported for the associated device, an exception is thrown.
+     *           It also calls `initGLMemObjects` to initialize the GL buffers.
+     *  \param[in] pIdx an index for the platform for which to create the context. 
      *                  Indices follow the order the platforms got returned in 
      *                  by the OpenCL runtime.
+     *  \param[in] gl_shared a flag for whether or not to create a GL-shared CL context.
      *  \return A reference to the created context.
      */
-    cl::Context& CLEnv::addContext (unsigned int pIdx)
+    cl::Context& CLEnv::addContext (unsigned int pIdx, const bool gl_shared)
     {
         try
         {
             int idx = devices.size ();
             devices.emplace_back ();
             platforms.at (pIdx).getDevices (CL_DEVICE_TYPE_ALL, &devices[idx]);
+            cl_context_properties *props = nullptr;
+
+            if (gl_shared)
+            {
+                // Set context properties (OS specific)
+                #if defined(_WIN32)
+                cl_context_properties _props[] = 
+                {
+                    CL_GL_CONTEXT_KHR, (cl_context_properties) wglGetCurrentContext (),
+                    CL_WGL_HDC_KHR, (cl_context_properties) wglGetCurrentDC (),
+                    CL_CONTEXT_PLATFORM, (cl_context_properties) (platforms.at (pIdx)) (),
+                    0 
+                };
+                #elif defined(__APPLE__) || defined(__MACOSX)
+                CGLContextObj kCGLContext = CGLGetCurrentContext ();
+                CGLShareGroupObj kCGLShareGroup = CGLGetShareGroup (kCGLContext);
+                cl_context_properties _props[] = 
+                {
+                    CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE, (cl_context_properties) kCGLShareGroup, 
+                    0 
+                };
+                #else
+                cl_context_properties _props[] = 
+                {
+                    CL_GL_CONTEXT_KHR, (cl_context_properties) glXGetCurrentContext (),
+                    CL_GLX_DISPLAY_KHR, (cl_context_properties) glXGetCurrentDisplay (),
+                    CL_CONTEXT_PLATFORM, (cl_context_properties) (platforms.at (pIdx)) (),
+                    0 
+                };
+                #endif
+
+                // Get the CL device associated with the GL context
+                #if defined(__APPLE__) || defined(__MACOSX)
+                cl::Device device = devices[idx][0];
+                #else
+                cl_device_id devID;
+                clGetGLContextInfoKHR_fn clGetGLContextInfo = (clGetGLContextInfoKHR_fn) 
+                    clGetExtensionFunctionAddressForPlatform ((platforms.at (pIdx)) (), "clGetGLContextInfoKHR");
+                clGetGLContextInfo (_props, CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR, sizeof (cl_device_id), &devID, nullptr);
+                cl::Device device (devID);
+                #endif
+
+                if (!checkCLGLInterop (device))
+                    throw cl::Error (CL_INVALID_DEVICE, "CLEnv::addContext");
+
+                props = _props;
+            }
             
-            contexts.emplace_back (devices[idx]);
+            contexts.emplace_back (devices[idx], props);
             // Initialize the vector for the queues 
             // that will be handled by this context
             queues.emplace_back ();
+
+            initGLMemObjects ();
 
             return contexts[idx];
         }
@@ -410,27 +503,29 @@ namespace clutils
     }
 
 
-    /*! \param[in] ctIdx the index of the context the device is handled by. 
-     *                   Indices follow the order the contexts were created in.
+    /*! \param[in] ctxIdx the index of the context the device is handled by. 
+     *                    Indices follow the order the contexts were created in.
      *  \param[in] dIdx the index of the device among those handled by the 
      *                  specified context. Indices follow the order the devices 
      *                  got returned in by the call to getDevices 
      *                  on the proper platform.
+     *  \param[in] props bitfield to enable command queue properties.
      *  \return A reference to the created queue.
      */
-    cl::CommandQueue& CLEnv::addQueue (unsigned int ctIdx, unsigned int dIdx)
+    cl::CommandQueue& CLEnv::addQueue (unsigned int ctxIdx, unsigned int dIdx, 
+                                       cl_command_queue_properties props)
     {
         try
         {
-            if (ctIdx >= contexts.size ())
+            if (ctxIdx >= contexts.size ())
                 throw std::out_of_range ("vector::_M_range_check");
 
-            std::vector<cl::Device> devs;
-            contexts[ctIdx].getInfo (CL_CONTEXT_DEVICES, &devs);
-            
-            queues[ctIdx].emplace_back (contexts[ctIdx], devs.at (dIdx));
+            std::vector<cl::Device> devs = contexts[ctxIdx].getInfo<CL_CONTEXT_DEVICES> ();
+    
+            int qIdx = queues[ctxIdx].size ();            
+            queues[ctxIdx].emplace_back (contexts[ctxIdx], devs.at (dIdx), props);
 
-            return queues[ctIdx][dIdx];
+            return queues[ctxIdx][qIdx];
         }
         catch (const std::out_of_range &error)
         {
@@ -441,8 +536,46 @@ namespace clutils
     }
 
 
-    /*! \param[in] ctIdx the index of the context the program is associated with. 
-     *                   Indices follow the order the contexts were created in.
+    /*! \param[in] ctxIdx the index of the context the GL-shared device is handled by. 
+     *                    Indices follow the order the contexts were created in.
+     *  \param[in] props bitfield to enable command queue properties.
+     *  \return A reference to the created queue.
+     */
+    cl::CommandQueue& CLEnv::addQueueGL (unsigned int ctxIdx, cl_command_queue_properties props)
+    {
+        try
+        {
+            if (ctxIdx >= contexts.size ())
+                throw std::out_of_range ("vector::_M_range_check");
+
+            #if defined(__APPLE__) || defined(__MACOSX)
+            std::vector<cl::Device> devs = contexts[ctxIdx].getInfo<CL_CONTEXT_DEVICES> ();
+            cl::Device device = devs[0];
+            #else
+            cl::Device device;
+            std::vector<cl_context_properties> ctxProps = contexts[ctxIdx].getInfo<CL_CONTEXT_PROPERTIES> ();
+            clGetGLContextInfoKHR_fn clGetGLContextInfo = (clGetGLContextInfoKHR_fn) 
+                clGetExtensionFunctionAddressForPlatform ((cl_platform_id) ctxProps[5], "clGetGLContextInfoKHR");
+            clGetGLContextInfo (ctxProps.data (), CL_CURRENT_DEVICE_FOR_GL_CONTEXT_KHR, 
+                                sizeof (cl_device_id), &(device ()), nullptr);
+            #endif
+
+            int qIdx = queues[ctxIdx].size ();
+            queues[ctxIdx].emplace_back (contexts[ctxIdx], device, props);
+
+            return queues[ctxIdx][qIdx];
+        }
+        catch (const std::out_of_range &error)
+        {
+            std::cerr << "Out of Range error: " << error.what () 
+                      << " (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+            exit (EXIT_FAILURE);
+        }
+    }
+
+
+    /*! \param[in] ctxIdx the index of the context the program is associated with. 
+     *                    Indices follow the order the contexts were created in.
      *  \param[in] kernel_filenames a vector of strings with 
      *                              the names of the kernel files (.cl).
      *  \param[in] kernel_name the name of a requested kernel.
@@ -450,7 +583,7 @@ namespace clutils
      *  \return The requested kernel. If kernel_name is NULL, the first kernel 
      *          of the program gets returned.
      */
-    cl::Kernel& CLEnv::addProgram (unsigned int ctIdx, 
+    cl::Kernel& CLEnv::addProgram (unsigned int ctxIdx, 
                                    const std::vector<std::string> &kernel_filenames, 
                                    const char *kernel_name, const char *build_options)
     {
@@ -467,11 +600,10 @@ namespace clutils
 
             // Create a program object from the source codes, 
             // targeting the requested context
-            programs.emplace_back (contexts.at (ctIdx), sources);
+            programs.emplace_back (contexts.at (ctxIdx), sources);
 
             // Build the program for all devices in the requested context
-            std::vector<cl::Device> devs;
-            contexts[ctIdx].getInfo (CL_CONTEXT_DEVICES, &devs);
+            std::vector<cl::Device> devs = contexts[ctxIdx].getInfo<CL_CONTEXT_DEVICES> ();
             int pgIdx = programs.size () - 1;
 
             try
@@ -484,8 +616,7 @@ namespace clutils
                           << " (" << clutils::getOpenCLErrorCodeString (error.err ()) 
                           << ")"  << std::endl << std::endl;
                 
-                std::string log;
-                programs[pgIdx].getBuildInfo (devs[0], CL_PROGRAM_BUILD_LOG, &log);
+                std::string log = programs[pgIdx].getBuildInfo<CL_PROGRAM_BUILD_LOG> (devs[0]);
                 std::cout << log << std::endl;
 
                 exit (EXIT_FAILURE);
@@ -493,8 +624,7 @@ namespace clutils
 
             // Get the kernel names
             // Note: getInfo returns a ';' delimited string.
-            std::string namesString;
-            programs[pgIdx].getInfo (CL_PROGRAM_KERNEL_NAMES, &namesString);
+            std::string namesString = programs[pgIdx].getInfo<CL_PROGRAM_KERNEL_NAMES> ();
             std::vector<std::string> kernel_names;
             clutils::split (namesString, ';', kernel_names);
             
@@ -507,7 +637,7 @@ namespace clutils
                 kernelIdx[pgIdx][kernel_names[idx]] = idx;
             }
 
-            if (kernel_name == NULL)
+            if (kernel_name == nullptr)
                 return getKernel (kernel_names.at (0).c_str (), pgIdx);
             else
                 return getKernel (kernel_name, pgIdx);
@@ -521,8 +651,8 @@ namespace clutils
     }
 
 
-    /*! \param[in] ctIdx the index of the context the program is associated with. 
-     *                   Indices follow the order the contexts were created in.
+    /*! \param[in] ctxIdx the index of the context the program is associated with. 
+     *                    Indices follow the order the contexts were created in.
      *  \param[in] kernel_filename a string with the name of the kernel file (.cl).
      *  \param[in] kernel_name the name of a requested kernel.
      *  \param[in] build_options options that are forwarded to the OpenCL compiler.
@@ -530,12 +660,26 @@ namespace clutils
      *          of the program gets returned.
      *  \sa addProgram
      */
-    cl::Kernel& CLEnv::addProgram (unsigned int ctIdx, 
+    cl::Kernel& CLEnv::addProgram (unsigned int ctxIdx, 
                                    const std::string &kernel_filename, 
                                    const char *kernel_name, const char *build_options)
     {
-        return addProgram (ctIdx, std::vector<std::string> { kernel_filename }, 
+        return addProgram (ctxIdx, std::vector<std::string> { kernel_filename }, 
                            kernel_name, build_options);
+    }
+
+
+    /*! \param[in] _pIdx platform index.
+     *  \param[in] _dIdx device index.
+     *  \param[in] _ctxIdx context index.
+     *  \param[in] _qIdx command queue index.
+     *  \param[in] _pgIdx program index.
+     */
+    CLEnvInfo::CLEnvInfo (unsigned int _pIdx, unsigned int _dIdx, 
+                          unsigned int _ctxIdx, unsigned int _qIdx, 
+                          unsigned int _pgIdx)
+        : pIdx (_pIdx), dIdx (_dIdx), ctxIdx (_ctxIdx), qIdx (_qIdx), pgIdx (_pgIdx)
+    {
     }
 
 }
