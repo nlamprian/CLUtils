@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getclenvinfo',['getCLEnvInfo',['../classclutils_1_1CLEnvInfo.html#a22909b73e6c09d310001e7fd221f012a',1,'clutils::CLEnvInfo']]],
   ['getcontext',['getContext',['../classclutils_1_1CLEnv.html#a939a2a5213fb9f7554ff789e83693577',1,'clutils::CLEnv']]],
   ['getkernel',['getKernel',['../classclutils_1_1CLEnv.html#a3d8ed78d2a977da3e3468de81efe198d',1,'clutils::CLEnv']]],
   ['getopenclerrorcodestring',['getOpenCLErrorCodeString',['../namespaceclutils.html#a8741b6850668dbbdb8a283122365c1d9',1,'clutils']]],

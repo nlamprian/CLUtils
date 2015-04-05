@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.9.1"/>
-<title>CLUtils: clutils::CLEnvInfo Class Reference</title>
+<title>CLUtils: clutils::CLEnvInfo&lt; nQueues &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="css/font-awesome.min.css" rel="stylesheet">
 <script>
@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classclutils_1_1CLEnvInfo-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">clutils::CLEnvInfo Class Reference</div>  </div>
+<div class="title">clutils::CLEnvInfo&lt; nQueues &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -123,33 +123,50 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8ce980aa1245671b2b8793185b4ffff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#ae8ce980aa1245671b2b8793185b4ffff">CLEnvInfo</a> (unsigned int _pIdx=0, unsigned int _dIdx=0, unsigned int _ctxIdx=0, unsigned int _qIdx=0, unsigned int _pgIdx=0)</td></tr>
-<tr class="memdesc:ae8ce980aa1245671b2b8793185b4ffff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> object.  <a href="#ae8ce980aa1245671b2b8793185b4ffff">More...</a><br /></td></tr>
-<tr class="separator:ae8ce980aa1245671b2b8793185b4ffff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a8bad6959cec0288733d8eca6df250c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a0a8bad6959cec0288733d8eca6df250c">CLEnvInfo</a> (unsigned int _pIdx=0, unsigned int _dIdx=0, unsigned int _ctxIdx=0, const std::vector&lt; unsigned int &gt; _qIdx={0}, unsigned int _pgIdx=0)</td></tr>
+<tr class="memdesc:a0a8bad6959cec0288733d8eca6df250c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> object.  <a href="#a0a8bad6959cec0288733d8eca6df250c">More...</a><br /></td></tr>
+<tr class="separator:a0a8bad6959cec0288733d8eca6df250c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22909b73e6c09d310001e7fd221f012a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classclutils_1_1CLEnvInfo.html">CLEnvInfo</a>&lt; 1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a22909b73e6c09d310001e7fd221f012a">getCLEnvInfo</a> (unsigned int idx)</td></tr>
+<tr class="memdesc:a22909b73e6c09d310001e7fd221f012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> object with the specified command queue.  <a href="#a22909b73e6c09d310001e7fd221f012a">More...</a><br /></td></tr>
+<tr class="separator:a22909b73e6c09d310001e7fd221f012a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:acec0b995815000ceadf5b6aef78e0069"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#acec0b995815000ceadf5b6aef78e0069">pIdx</a></td></tr>
-<tr class="separator:acec0b995815000ceadf5b6aef78e0069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a02e9f9b6136f42c87ef9afdd22aa4c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a0a02e9f9b6136f42c87ef9afdd22aa4c">dIdx</a></td></tr>
-<tr class="separator:a0a02e9f9b6136f42c87ef9afdd22aa4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a406a39e266e4d72901f7963c8f0ff958"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a406a39e266e4d72901f7963c8f0ff958">ctxIdx</a></td></tr>
-<tr class="separator:a406a39e266e4d72901f7963c8f0ff958"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0494c8a1677ee30037e6b687b247489c"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a0494c8a1677ee30037e6b687b247489c">qIdx</a></td></tr>
-<tr class="separator:a0494c8a1677ee30037e6b687b247489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ab3af0761e77fab8643fa5f6ec7965a"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a9ab3af0761e77fab8643fa5f6ec7965a">pgIdx</a></td></tr>
-<tr class="separator:a9ab3af0761e77fab8643fa5f6ec7965a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697d72018f7e84109da8abb4a9424f04"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a697d72018f7e84109da8abb4a9424f04">pIdx</a></td></tr>
+<tr class="separator:a697d72018f7e84109da8abb4a9424f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a350ef40d56de5b6c644758653ed66413"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a350ef40d56de5b6c644758653ed66413">dIdx</a></td></tr>
+<tr class="separator:a350ef40d56de5b6c644758653ed66413"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc0819cdf87ddbed3d7551c547488301"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#abc0819cdf87ddbed3d7551c547488301">ctxIdx</a></td></tr>
+<tr class="separator:abc0819cdf87ddbed3d7551c547488301"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d060c7ef6fdffaec514fb50d858fd3e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#a5d060c7ef6fdffaec514fb50d858fd3e">qIdx</a></td></tr>
+<tr class="separator:a5d060c7ef6fdffaec514fb50d858fd3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebebbcb3df0036a40d61eb606a8a18ee"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classclutils_1_1CLEnvInfo.html#aebebbcb3df0036a40d61eb606a8a18ee">pgIdx</a></td></tr>
+<tr class="separator:aebebbcb3df0036a40d61eb606a8a18ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Facilitates the conveyance of <code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> arguments. </p>
-<p><code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> creates an OpenCL environment. A <code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> object potentially contains many platforms, contexts, queues, etc, that are to be used by different (independent) subsystems. Those subsystems will have to know where to look inside <a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a> for their associated CL objects. <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> organizes this process of information transfer between OpenCL systems. </p>
+<div class="textblock"><h3>template&lt;unsigned int nQueues = 1&gt;<br />
+class clutils::CLEnvInfo&lt; nQueues &gt;</h3>
+
+<p>Facilitates the conveyance of <code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> arguments. </p>
+<p><code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> creates an OpenCL environment. A <code><a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a></code> object potentially contains many platforms, contexts, queues, etc, that are to be used by different (independent) subsystems. Those subsystems will have to know where to look inside <a class="el" href="classclutils_1_1CLEnv.html" title="Sets up an OpenCL environment. ">CLEnv</a> for their associated CL objects. <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> organizes this process of information transfer between OpenCL systems.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">nQueues</td><td>the number of command queue indices to be held by <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae8ce980aa1245671b2b8793185b4ffff"></a>
+<a class="anchor" id="a0a8bad6959cec0288733d8eca6df250c"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">clutils::CLEnvInfo::CLEnvInfo </td>
+          <td class="memname"><a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::<a class="el" href="classclutils_1_1CLEnvInfo.html">CLEnvInfo</a> </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>_pIdx</em> = <code>0</code>, </td>
@@ -169,8 +186,8 @@ Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">unsigned int&#160;</td>
-          <td class="paramname"><em>_qIdx</em> = <code>0</code>, </td>
+          <td class="paramtype">const std::vector&lt; unsigned int &gt;&#160;</td>
+          <td class="paramname"><em>_qIdx</em> = <code>{&#160;0&#160;}</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -184,6 +201,11 @@ Public Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Initializes a <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> object. </p>
@@ -193,7 +215,7 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_pIdx</td><td>platform index. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_dIdx</td><td>device index. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_ctxIdx</td><td>context index. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">_qIdx</td><td>command queue index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">_qIdx</td><td>vector with command queue indices. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">_pgIdx</td><td>program index. </td></tr>
   </table>
   </dd>
@@ -201,13 +223,51 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="a406a39e266e4d72901f7963c8f0ff958"></a>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a22909b73e6c09d310001e7fd221f012a"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int clutils::CLEnvInfo::ctxIdx</td>
+          <td class="memname"><a class="el" href="classclutils_1_1CLEnvInfo.html">CLEnvInfo</a>&lt;1&gt; <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::getCLEnvInfo </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>idx</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new <code><a class="el" href="classclutils_1_1CLEnvInfo.html" title="Facilitates the conveyance of CLEnv arguments. ">CLEnvInfo</a></code> object with the specified command queue. </p>
+<p>Maintains the same OpenCL configuration, but chooses only one of the available command queues to include.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">idx</td><td>an index for the <code>qIdx</code> vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="abc0819cdf87ddbed3d7551c547488301"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::ctxIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -215,12 +275,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0a02e9f9b6136f42c87ef9afdd22aa4c"></a>
+<a class="anchor" id="a350ef40d56de5b6c644758653ed66413"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int clutils::CLEnvInfo::dIdx</td>
+          <td class="memname">unsigned int <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::dIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -228,12 +290,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9ab3af0761e77fab8643fa5f6ec7965a"></a>
+<a class="anchor" id="aebebbcb3df0036a40d61eb606a8a18ee"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int clutils::CLEnvInfo::pgIdx</td>
+          <td class="memname">unsigned int <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::pgIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -241,12 +305,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acec0b995815000ceadf5b6aef78e0069"></a>
+<a class="anchor" id="a697d72018f7e84109da8abb4a9424f04"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int clutils::CLEnvInfo::pIdx</td>
+          <td class="memname">unsigned int <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::pIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -254,27 +320,28 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0494c8a1677ee30037e6b687b247489c"></a>
+<a class="anchor" id="a5d060c7ef6fdffaec514fb50d858fd3e"></a>
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;unsigned int nQueues = 1&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int clutils::CLEnvInfo::qIdx</td>
+          <td class="memname">std::vector&lt;unsigned int&gt; <a class="el" href="classclutils_1_1CLEnvInfo.html">clutils::CLEnvInfo</a>&lt; nQueues &gt;::qIdx</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Queue index. </p>
+<p>Vector of queue indices. </p>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="CLUtils_8hpp_source.html">CLUtils.hpp</a></li>
-<li><a class="el" href="CLUtils_8cpp.html">CLUtils.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Mar 23 2015 22:12:40 for CLUtils by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Apr 5 2015 18:09:35 for CLUtils by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>
