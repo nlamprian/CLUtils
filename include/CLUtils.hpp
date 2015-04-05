@@ -167,24 +167,68 @@ namespace clutils
      *           Those subsystems will have to know where to look inside CLEnv 
      *           for their associated CL objects. `CLEnvInfo` organizes this 
      *           process of information transfer between OpenCL systems.
+     *           
+     *  \tparam nQueues the number of command queue indices to be held by `CLEnvInfo`.
      */
+    template<unsigned int nQueues = 1>
     class CLEnvInfo
     {
     public:
         /*! \brief Initializes a `CLEnvInfo` object.
-         *  \details All provided indices are supposed to follow the 
-         *           order the associated objects were created in the 
-         *           associated `CLEnv` instance.
+         *  \details All provided indices are supposed to follow the order the 
+         *           associated objects were created in the associated `CLEnv` instance.
+         *           
+         *  \param[in] _pIdx platform index.
+         *  \param[in] _dIdx device index.
+         *  \param[in] _ctxIdx context index.
+         *  \param[in] _qIdx vector with command queue indices.
+         *  \param[in] _pgIdx program index.
          */
-        CLEnvInfo (unsigned int _pIdx = 0, unsigned int _dIdx = 0, 
-                   unsigned int _ctxIdx = 0, unsigned int _qIdx = 0, 
-                   unsigned int _pgIdx = 0);
+        CLEnvInfo (unsigned int _pIdx = 0, unsigned int _dIdx = 0, unsigned int _ctxIdx = 0, 
+                   const std::vector<unsigned int> _qIdx = { 0 }, unsigned int _pgIdx = 0) : 
+            pIdx (_pIdx), dIdx (_dIdx), ctxIdx (_ctxIdx), pgIdx (_pgIdx)
+        {
+            try
+            {
+                if (_qIdx.size () != nQueues)
+                    throw "The provided vector of command queue indices has the wrong size";
 
-        unsigned int pIdx;    /*!< Platform index. */
-        unsigned int dIdx;    /*!< Device index. */
-        unsigned int ctxIdx;  /*!< Context index. */
-        unsigned int qIdx;    /*!< Queue index. */
-        unsigned int pgIdx;   /*!< Program index. */
+                qIdx = _qIdx;
+            }
+            catch (const char *error)
+            {
+                std::cerr << "Error[CLEnvInfo]: " << error << std::endl;
+                exit (EXIT_FAILURE);
+            }
+        }
+
+
+        /*! \brief Creates a new `CLEnvInfo` object with the specified command queue.
+         *  \details Maintains the same OpenCL configuration, but chooses only one
+         *           of the available command queues to include.
+         *           
+         *  \param[in] idx an index for the `qIdx` vector.
+         */
+        CLEnvInfo<1> getCLEnvInfo (unsigned int idx)
+        {
+            try
+            {
+                return CLEnvInfo<1> (pIdx, dIdx, ctxIdx, { qIdx.at (idx) }, pgIdx);
+            }
+            catch (const std::out_of_range &error)
+            {
+                std::cerr << "Out of Range error: " << error.what () 
+                          << " (" << __FILE__ << ":" << __LINE__ << ")" << std::endl;
+                exit (EXIT_FAILURE);
+            }
+        }
+
+
+        unsigned int pIdx;               /*!< Platform index. */
+        unsigned int dIdx;               /*!< Device index. */
+        unsigned int ctxIdx;             /*!< Context index. */
+        std::vector<unsigned int> qIdx;  /*!< Vector of queue indices. */
+        unsigned int pgIdx;              /*!< Program index. */
     };
 
 
@@ -416,7 +460,6 @@ namespace clutils
          */
         cl::Event& event ()
         {
-            pEvent = cl::Event ();
             return pEvent;
         }
 

@@ -668,18 +668,4 @@ namespace clutils
                            kernel_name, build_options);
     }
 
-
-    /*! \param[in] _pIdx platform index.
-     *  \param[in] _dIdx device index.
-     *  \param[in] _ctxIdx context index.
-     *  \param[in] _qIdx command queue index.
-     *  \param[in] _pgIdx program index.
-     */
-    CLEnvInfo::CLEnvInfo (unsigned int _pIdx, unsigned int _dIdx, 
-                          unsigned int _ctxIdx, unsigned int _qIdx, 
-                          unsigned int _pgIdx)
-        : pIdx (_pIdx), dIdx (_dIdx), ctxIdx (_ctxIdx), qIdx (_qIdx), pgIdx (_pgIdx)
-    {
-    }
-
 }
