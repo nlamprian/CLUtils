@@ -85,18 +85,18 @@ mkdir build
 cd build
 
 cmake ..
-# or, to build the tests too
-# cmake -DBUILD_TESTS=ON ..
+# or to build the tests too
+cmake -DBUILD_TESTS=ON ..
 
 make
 
-# to run the example
+# to run the example (from the build directory!)
 ./bin/clUtils_vecAdd
 
 # to install the library
 sudo make install
 
-# to build the documentation
+# to build the docs
 make doxygen
 firefox docs/html/index.html
 ```

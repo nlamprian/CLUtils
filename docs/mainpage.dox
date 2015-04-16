@@ -120,18 +120,18 @@ Build & Install
 > cd build
 > 
 > cmake .. <br>
-> \# or, to build the tests too <br>
-> \# cmake -DBUILD_TESTS=ON ..
+> \# or to build the tests too <br>
+> cmake -DBUILD_TESTS=ON ..
 > 
 > make
 > 
-> \# to run the example <br>
+> \# to run the example (from the build directory!) <br>
 > ./bin/clUtils_vecAdd
 > 
 > \# to install the library <br>
 > sudo make install
 > 
-> \# to build the documentation <br>
+> \# to build the docs <br>
 > make doxygen <br>
 > firefox docs/html/index.html
 

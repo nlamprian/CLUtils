@@ -1,12 +1,14 @@
 if ( BUILD_TESTS )
 
-    find_package ( GTest REQUIRED )
+    # find_package ( GTest REQUIRED )
     find_package ( Threads REQUIRED )
 
     include_directories ( ${GTEST_INCLUDE_DIRS}
                           ${COMMON_INCLUDES} )
 
     add_executable ( clUtils_tests tests.cpp )
+
+    add_dependencies ( clUtils_tests googletest )
 
     target_link_libraries ( clUtils_tests LINK_PUBLIC CLUtils
                                                       ${GTEST_BOTH_LIBRARIES}
