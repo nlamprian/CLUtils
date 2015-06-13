@@ -16,7 +16,7 @@ If you would like something more general and complete, take a look at [`boost.co
 * Added **CLEnvInfo** to support conveyance of OpenCL env configurations
 * Added **CPUTimer** for profiling host code
 * Added **GPUTimer** for profiling device code
-* Added **ProfilingInfo** for manipulting profiling data
+* Added **ProfilingInfo** for manipulating profiling data
 
 API
 ===
@@ -62,7 +62,7 @@ int main ()
     cl::Context &context (clEnv.getContext ());
     cl::CommandQueue &queue (clEnv.getQueue ());
 
-    CLEnvInfo info (0, 0, 0, 0, 0);
+    CLEnvInfo<1> info (0, 0, 0, { 0 }, 0);
     PrefixSum scan (clEnv, info);
 
     scan.run ();
@@ -84,14 +84,17 @@ cd CLUtils
 mkdir build
 cd build
 
-cmake ..
+cmake -DBUILD_EXAMPLES=ON ..
 # or to build the tests too
-cmake -DBUILD_TESTS=ON ..
+cmake -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
 
 make
 
 # to run the example (from the build directory!)
-./bin/clUtils_vecAdd
+./bin/clutils_vecAdd
+
+# to run the tests
+./bin/clutils_tests
 
 # to install the library
 sudo make install

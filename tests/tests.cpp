@@ -1,7 +1,7 @@
 /*! \file tests.cpp
  *  \brief Google Test Unit Tests
  *  \author Nick Lamprianidis
- *  \version 0.2
+ *  \version 0.2.1
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par
@@ -26,20 +26,20 @@
  *  THE SOFTWARE.
  */
 
-#include <gtest/gtest.h>
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <random>
 #include <cmath>
 #include <thread>
+#include <gtest/gtest.h>
 #include <CLUtils.hpp>
 
 
 const std::string kernel_filename { "kernels/kernels.cl" };
 const std::string kernel_filename2 { "kernels/kernels2.cl" };
 const std::vector<std::string> kernel_filenames { kernel_filename, kernel_filename2 };
-const int n_elements = 1<<12;  // 4K elements
+const int n_elements = 1 << 12;  // 4K elements
 
 auto seed = std::chrono::system_clock::now ().time_since_epoch ().count ();
 std::default_random_engine generator (seed);

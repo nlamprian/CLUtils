@@ -3,7 +3,7 @@
  *  \details CLUtils offers utilities that help 
  *           setup and manage an OpenCL environment.
  *  \author Nick Lamprianidis
- *  \version 0.2
+ *  \version 0.2.1
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par

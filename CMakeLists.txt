@@ -1,8 +1,11 @@
 cmake_minimum_required ( VERSION 2.8.12 )
 project ( CLUtils )
+set ( FNAME "clutils" )
 set ( PROJECT_VERSION_MAJOR 0 )
 set ( PROJECT_VERSION_MINOR 2 )
+set ( PROJECT_VERSION_PATCH 1 )
 
+option ( BUILD_EXAMPLES "Build examples" OFF )
 option ( BUILD_TESTS "Build tests" OFF )
 
 list ( APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules )
@@ -27,11 +30,21 @@ include_directories (
 
 add_subdirectory ( src )
 add_subdirectory ( kernels )
-add_subdirectory ( examples )
 add_subdirectory ( docs )
+
+if ( BUILD_EXAMPLES )
+    add_subdirectory ( examples )
+endif ( BUILD_EXAMPLES )
 
 if ( BUILD_TESTS )
     enable_testing (  )
-    add_subdirectory ( external/gtest )
+    
+    find_package ( GTest QUIET )
+    if ( NOT GTEST_FOUND )
+        message ( STATUS "gtest not found:" )
+        message ( STATUS " - Library will be downloaded from source" )
+        add_subdirectory ( external/gtest )
+    endif ( NOT GTEST_FOUND )
+    
     add_subdirectory ( tests )
-endif (  )
+endif ( BUILD_TESTS )

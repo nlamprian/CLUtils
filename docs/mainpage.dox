@@ -20,7 +20,7 @@ If you would like something more general and complete, take a look at [boost.com
 	<li>Added **CLEnvInfo** to support conveyance of OpenCL env configurations</li>
 	<li>Added **CPUTimer** for profiling host code</li>
 	<li>Added **GPUTimer** for profiling device code</li>
-	<li>Added **ProfilingInfo** for manipulting profiling data</li>
+	<li>Added **ProfilingInfo** for manipulating profiling data</li>
 </ul>
 
 API
@@ -100,7 +100,7 @@ Having defined all the necessary **OpenCL entities** in **CLEnv**, an **OpenCL c
 > &nbsp;&nbsp;&nbsp;&nbsp;    cl::Context &context (clEnv.getContext ()); <br>
 > &nbsp;&nbsp;&nbsp;&nbsp;    cl::CommandQueue &queue (clEnv.getQueue ()); <br>
 > 
-> &nbsp;&nbsp;&nbsp;&nbsp;    CLEnvInfo info (0, 0, 0, 0, 0); <br>
+> &nbsp;&nbsp;&nbsp;&nbsp;    CLEnvInfo<1> info (0, 0, 0, { 0 }, 0); <br>
 > &nbsp;&nbsp;&nbsp;&nbsp;    PrefixSum scan (clEnv, info); <br>
 > 
 > &nbsp;&nbsp;&nbsp;&nbsp;    scan.run (); <br>
@@ -119,14 +119,17 @@ Build & Install
 > mkdir build <br>
 > cd build
 > 
-> cmake .. <br>
+> cmake -DBUILD_EXAMPLES=ON .. <br>
 > \# or to build the tests too <br>
-> cmake -DBUILD_TESTS=ON ..
+> cmake -DBUILD_EXAMPLES=ON -DBUILD_TESTS=ON ..
 > 
 > make
 > 
 > \# to run the example (from the build directory!) <br>
-> ./bin/clUtils_vecAdd
+> ./bin/clutils_vecAdd
+> 
+> \# to run the tests <br>
+> ./bin/clutils_tests
 > 
 > \# to install the library <br>
 > sudo make install

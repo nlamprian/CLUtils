@@ -1,4 +1,3 @@
-add_executable ( clUtils_vecAdd vecAdd.cpp )
+add_executable ( ${FNAME}_vecAdd vecAdd.cpp )
 
-target_link_libraries ( clUtils_vecAdd CLUtils
-                                       ${OPENCL_LIBRARIES} )
+target_link_libraries ( ${FNAME}_vecAdd CLUtils ${OPENCL_LIBRARIES} )

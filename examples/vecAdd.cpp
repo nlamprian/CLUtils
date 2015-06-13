@@ -1,8 +1,8 @@
 /*! \file vecAdd.cpp
- *  \brief An example showcasing the use of the CLUtils library.
+ *  \brief An example showcasing the use of the `CLUtils` library.
  *         The executed kernel performs a vector addition.
  *  \author Nick Lamprianidis
- *  \version 0.2
+ *  \version 0.2.1
  *  \date 2014-2015
  *  \copyright The MIT License (MIT)
  *  \par
@@ -29,19 +29,11 @@
 
 #include <iostream>
 #include <vector>
-
-#define __CL_ENABLE_EXCEPTIONS
-
-#if defined(__APPLE__) || defined(__MACOSX)
-#include <OpenCL/cl.hpp>
-#else
-#include <CL/cl.hpp>
-#endif
 #include <CLUtils.hpp>
 
 
 const std::string kernel_filename { "kernels/kernels.cl" };
-const int n_elements = 1<<24;  // 16M elements
+const int n_elements = 1 << 24;  // 16M elements
 
 
 /*! \brief Creates an OpenCL environment, and then
