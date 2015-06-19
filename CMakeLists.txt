@@ -3,7 +3,7 @@ project ( CLUtils )
 set ( FNAME "clutils" )
 set ( PROJECT_VERSION_MAJOR 0 )
 set ( PROJECT_VERSION_MINOR 2 )
-set ( PROJECT_VERSION_PATCH 1 )
+set ( PROJECT_VERSION_PATCH 2 )
 
 option ( BUILD_EXAMPLES "Build examples" OFF )
 option ( BUILD_TESTS "Build tests" OFF )
