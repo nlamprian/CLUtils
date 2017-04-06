@@ -143,6 +143,7 @@ else()
       /usr
       /usr/local
     PATH_SUFFIXES
+      lib64
       lib/x86_64
       lib/x64
       lib)
