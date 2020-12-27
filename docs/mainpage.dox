@@ -24,7 +24,7 @@ If you would like something more general and complete, take a look at [boost.com
 </ul>
 
 API
-===
+---
 <hr>
 
 <img src="https://img.shields.io/badge/API-experimental-red.svg?style=flat" alt="api" align="left">
@@ -110,10 +110,10 @@ Having defined all the necessary **OpenCL entities** in **CLEnv**, an **OpenCL c
 
 <br>
 Build & Install
-===============
+---------------
 <hr>
 
-> git clone https://github.com/pAIgn10/CLUtils.git <br>
+> git clone https://github.com/nlamprian/CLUtils.git <br>
 > cd CLUtils
 > 
 > mkdir build <br>

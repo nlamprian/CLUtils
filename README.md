@@ -19,7 +19,7 @@ If you would like something more general and complete, take a look at [`boost.co
 * Added **ProfilingInfo** for manipulating profiling data
 
 API
-===
+---
 
 ![api](https://img.shields.io/badge/API-experimental-red.svg?style=flat)
 
@@ -71,14 +71,14 @@ int main ()
 }
 ```
 
-The complete `documentation` is available [here](http://clutils.paign10.me).
+The complete `documentation` is available [here](https://clutils.nlamprian.me).
 
 
 Build & Install
-===============
+---------------
 
 ```bash
-git clone https://github.com/pAIgn10/CLUtils.git
+git clone https://github.com/nlamprian/CLUtils.git
 cd CLUtils
 
 mkdir build
